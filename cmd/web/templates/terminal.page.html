@@ -1,0 +1,22 @@
+{{ template "base" . }}
+{{ define "desc" }}Virtual Terminal Page{{ end }}
+{{ define "kwds" }}Virtual, Terminal, Page{{ end }}
+{{ define "title" }}Virtual Terminal{{ end }}
+{{ define "css" }}
+    <style>
+        body {
+            background-color: black !important;
+            color: green !important;
+        }
+    </style>
+{{ end }}
+{{ define "content" }}
+    <h2>Virtual Terminal</h2>
+{{ end }}
+{{ define "js" }}
+    <script>
+        //@ts-check
+        let text = "Hello, From console!"
+        console.log(text)
+    </script>
+{{ end }}

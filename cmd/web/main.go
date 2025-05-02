@@ -40,12 +40,12 @@ func (app *application) serve() error {
 		Handler:           app.routes(),
 		IdleTimeout:       30 * time.Second,
 		ReadTimeout:       10 * time.Second,
-		ReadHeaderTimeout: 5 * time.Second,
-		WriteTimeout:      5 * time.Second,
+		ReadHeaderTimeout: 05 * time.Second,
+		WriteTimeout:      05 * time.Second,
 	}
 	app.infoLog.Printf(
 
-		"Starting HTTP server in %s mode on port %d",
+		"Starting HTTP server in %s mode on: http://localhost:%d",
 		app.config.env,
 		app.config.port,
 	)
@@ -54,9 +54,7 @@ func (app *application) serve() error {
 
 func main() {
 	log.SetFlags(log.Ldate | log.Lshortfile | log.LstdFlags)
-
 	var cfg config
-
 	flag.IntVar(
 		&cfg.port,
 		"port",
@@ -76,21 +74,18 @@ func main() {
 		"Specify API url. { default: http://localhost:40001 }",
 	)
 	flag.Parse()
-
 	cfg.stripe.key = os.Getenv("STRIPE_KEY")
 	cfg.stripe.secret = os.Getenv("STRIPE_SECRET")
-
 	infoLog := log.New(
 		os.Stderr,
-		"INFO",
+		"INFO: ",
 		log.Ldate|log.Ltime|log.Lshortfile|log.LstdFlags,
 	)
 	errorLog := log.New(
 		os.Stderr,
-		"ERROR",
+		"ERROR: ",
 		log.Ldate|log.Ltime|log.Lshortfile|log.LstdFlags,
 	)
-
 	tc := make(map[string]*template.Template)
 	app := &application{
 		config:        cfg,
@@ -99,7 +94,6 @@ func main() {
 		templateCache: tc,
 		version:       version,
 	}
-
 	err := app.serve()
 	if err != nil {
 		app.errorLog.Fatal(err)
